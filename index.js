@@ -8,12 +8,20 @@
   GIT : https://github.com/RTX-GAMINGG/Bot-ghost-status-remover-by-RTX
   DISCORD SERVER : https://discord.gg/FUEHs7RCqz
   YOUTUBE : https://www.youtube.com/channel/UCPbAvYWBgnYhliJa1BIrv0A
+/**
+ ██████╗░████████╗██╗░░██╗           
+ ██╔══██╗╚══██╔══╝╚██╗██╔╝          
+ ██████╔╝░░░██║░░░░╚███╔╝░          
+ ██╔══██╗░░░██║░░░░██╔██╗░          
+ ██║░░██║░░░██║░░░██╔╝╚██╗          
+ ╚═╝░░╚═╝░░░╚═╝░░░╚═╝░░╚═╝          
+ GIT : https://github.com/RTX-GAMINGG/Bot-ghost-status-remover-by-RTX
+ DISCORD SERVER : https://discord.gg/FUEHs7RCqz
+ YOUTUBE : https://www.youtube.com/channel/UCPbAvYWBgnYhliJa1BIrv0A
  * **********************************************
  *   Code by RTX GAMING
  * **********************************************
  */
-
-
 
 const { Client, GatewayIntentBits, ActivityType, TextChannel } = require('discord.js');
 require('dotenv').config();
@@ -35,12 +43,11 @@ app.listen(port, () => {
   console.log(`🔗 Powered By RTX`);
 });
 
-
-const statusMessages = ["PLAYING","MUSIC"];
-
+const statusMessages = ["HELLO", "STREAMING", "LOUZACOMMUNITY"];
+const twitchLink = "https://www.twitch.tv/ahmed5102morocco"; // Remplacer "votre_nom_de_compte" par votre nom de compte Twitch
 
 let currentIndex = 0;
-const channelId = '';
+const channelId = ''; // ID du canal Discord où vous souhaitez envoyer les messages de statut
 
 async function login() {
   try {
@@ -52,39 +59,28 @@ async function login() {
   }
 }
 
-/**
- ██████╗░████████╗██╗░░██╗           
- ██╔══██╗╚══██╔══╝╚██╗██╔╝          
- ██████╔╝░░░██║░░░░╚███╔╝░          
- ██╔══██╗░░░██║░░░░██╔██╗░          
- ██║░░██║░░░██║░░░██╔╝╚██╗          
- ╚═╝░░╚═╝░░░╚═╝░░░╚═╝░░╚═╝          
-GIT : https://github.com/RTX-GAMINGG/Bot-ghost-status-remover-by-RTX
-  DISCORD SERVER : https://discord.gg/FUEHs7RCqz
-  YOUTUBE : https://www.youtube.com/channel/UCPbAvYWBgnYhliJa1BIrv0A
- * **********************************************
- *   Code by RTX GAMING
- * **********************************************
- */
-
-
 function updateStatusAndSendMessages() {
   const currentStatus = statusMessages[currentIndex];
   const nextStatus = statusMessages[(currentIndex + 1) % statusMessages.length];
 
-  client.user.setPresence({
-    activities: [{ name: currentStatus, type: ActivityType.Custom}],
-    status: 'dnd',
-  });
-
+  if (currentStatus === "STREAMING") {
+    client.user.setPresence({
+      activities: [{ name: currentStatus, type: "STREAMING", url: twitchLink }],
+      status: 'dnd',
+    });
+  } else {
+    client.user.setPresence({
+      activities: [{ name: currentStatus, type: ActivityType.Custom}],
+      status: 'dnd',
+    });
+  }
   
   const textChannel = client.channels.cache.get(channelId);
 
   if (textChannel instanceof TextChannel) {
-   
     textChannel.send(`Bot status is: ${currentStatus}`);
   } else {
-
+    // Gérer le cas où le canal n'est pas un TextChannel
   }
 
   currentIndex = (currentIndex + 1) % statusMessages.length;
@@ -102,18 +98,3 @@ client.once('ready', () => {
 });
 
 login();
-
-/**
- ██████╗░████████╗██╗░░██╗           
- ██╔══██╗╚══██╔══╝╚██╗██╔╝          
- ██████╔╝░░░██║░░░░╚███╔╝░          
- ██╔══██╗░░░██║░░░░██╔██╗░          
- ██║░░██║░░░██║░░░██╔╝╚██╗          
- ╚═╝░░╚═╝░░░╚═╝░░░╚═╝░░╚═╝          
-GIT : https://github.com/RTX-GAMINGG/Bot-ghost-status-remover-by-RTX
-  DISCORD SERVER : https://discord.gg/FUEHs7RCqz
-  YOUTUBE : https://www.youtube.com/channel/UCPbAvYWBgnYhliJa1BIrv0A
- * **********************************************
- *   Code by RTX GAMING
- * **********************************************
- */
