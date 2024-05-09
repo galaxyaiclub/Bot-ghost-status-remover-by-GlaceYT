@@ -1,48 +1,47 @@
+const Discord = require('discord.js');
 const { Client, GatewayIntentBits, ActivityType } = require('discord.js');
 require('dotenv').config();
 
 const client = new Client({
-  intents: Object.keys(GatewayIntentBits).map((a) => {
-    return GatewayIntentBits[a];
-  }),
+  intents: Object.keys(GatewayIntentBits).map((a) => GatewayIntentBits[a]),
 });
 
-const statusMessages = ["streaming","LOUZA COMMUNITY"];
-
-let currentIndex = 0;
-const twitchStreamLink = 'https://www.twitch.tv/ahmed5102morocco'; // Replace with your Twitch stream link
+const twitchStreamLink = 'https://www.twitch.tv/ahmed5102morocco'; // Remplacez par votre lien Twitch
 
 async function login() {
   try {
     await client.login(process.env.TOKEN);
-    console.log(`\x1b[36m%s\x1b[0m`, `|    🐇 Logged in as ${client.user.tag}`);
+    console.log(`[36m%s[0m`, `|    🐇 Logged in as ${client.user.tag}`);
   } catch (error) {
     console.error('Failed to log in:', error);
     process.exit(1);
   }
 }
 
-function updateStatusAndSendMessages() {
-  const currentStatus = statusMessages[currentIndex];
+client.once('ready', () => {
+  console.log(`[36m%s[0m`, `|    ✅ Bot is ready as ${client.user.tag}`);
+  console.log(`[36m%s[0m`, `|    ✨HAPPY NEW YEAR MY DEAR FAMILY`);
+  console.log(`[36m%s[0m`, `|    ❤️WELCOME TO 2024`);
 
   client.user.setPresence({
-    activities: [{ name: currentStatus, type: 'STREAMING', url: twitchStreamLink }],
-    status: 'streaming', // Set status to "online" to see the purple streaming status
+    activities: [{
+      name: 'Streaming on Twitch',
+      type: ActivityType.Streaming,
+      url: twitchStreamLink,
+    }],
+    status: 'online', // Vous pouvez également utiliser 'idle' ou 'dnd' pour les statuts "away" ou "do not disturb"
   }).catch(console.error);
 
-  currentIndex = (currentIndex + 1) % statusMessages.length;
-}
-
-client.once('ready', () => {
-  console.log(`\x1b[36m%s\x1b[0m`, `|    ✅ Bot is ready as ${client.user.tag}`);
-  console.log(`\x1b[36m%s\x1b[0m`, `|    ✨HAPPY NEW YEAR MY DEAR FAMILY`);
-  console.log(`\x1b[36m%s\x1b[0m`, `|    ❤️WELCOME TO 2024`);
-  updateStatusAndSendMessages();
-
   setInterval(() => {
-    updateStatusAndSendMessages();
-  }, 10000);
+    client.user.setPresence({
+      activities: [{
+        name: 'Streaming on Twitch',
+        type: ActivityType.Streaming,
+        url: twitchStreamLink,
+      }],
+      status: 'online', // Vous pouvez également utiliser 'idle' ou 'dnd' pour les statuts "away" ou "do not disturb"
+    }).catch(console.error);
+  }, 10000); // Met à jour le statut toutes les 10 secondes
 });
 
 login();
-
