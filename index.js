@@ -1,4 +1,3 @@
-
 const { Client, GatewayIntentBits, ActivityType, TextChannel } = require('discord.js');
 require('dotenv').config();
 const express = require('express');
@@ -22,7 +21,7 @@ app.listen(port, () => {
 const statusMessages = ["streaming","LOUZA COMMUNITY"];
 
 let currentIndex = 0;
-const channelId = ''; // Your Discord channel ID goes here
+const channelId = '1238128020280311922'; // Your Discord channel ID goes here
 
 const twitchStreamLink = 'https://www.twitch.tv/ahmed5102morocco'; // Replace with your Twitch stream link
 
