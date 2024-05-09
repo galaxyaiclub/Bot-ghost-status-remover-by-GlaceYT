@@ -26,7 +26,11 @@ function updateStreamingStatus() {
       url: twitchStreamLink,
     }],
     status: 'online',
-  }).catch(console.error);
+  }).then(() => {
+    console.log('Streaming status updated successfully.');
+  }).catch((error) => {
+    console.error('Failed to update streaming status:', error);
+  });
 }
 
 // Express App
@@ -49,4 +53,3 @@ app.listen(PORT, async () => {
     process.exit(1);
   }
 });
-
