@@ -1,28 +1,15 @@
-const { Client, GatewayIntentBits, ActivityType, TextChannel } = require('discord.js');
+const { Client, GatewayIntentBits, ActivityType } = require('discord.js');
 require('dotenv').config();
-const express = require('express');
-const fs = require('fs');
-const path = require('path');
+
 const client = new Client({
   intents: Object.keys(GatewayIntentBits).map((a) => {
     return GatewayIntentBits[a];
   }),
 });
-const app = express();
-const port = 4000;
-app.get('/', (req, res) => {
-  res.send('YaY Your Bot Status Changed✨');
-});
-app.listen(port, () => {
-  console.log(`🔗 Listening to louza.talk4fun.net: http://localhost:${port}`);
-  console.log(`🔗 Powered By louza.talk4fun.net`);
-});
 
-const statusMessages = ["streaming LOUZA COMMUNITY"];
+const statusMessages = ["streaming","LOUZA COMMUNITY"];
 
 let currentIndex = 0;
-const channelId = ''; // Your Discord channel ID goes here
-
 const twitchStreamLink = 'https://www.twitch.tv/ahmed5102morocco'; // Replace with your Twitch stream link
 
 async function login() {
@@ -37,20 +24,11 @@ async function login() {
 
 function updateStatusAndSendMessages() {
   const currentStatus = statusMessages[currentIndex];
-  const nextStatus = statusMessages[(currentIndex + 1) % statusMessages.length];
 
   client.user.setPresence({
     activities: [{ name: currentStatus, type: 'STREAMING', url: twitchStreamLink }],
-    status: 'dnd',
-  });
-
-  const textChannel = client.channels.cache.get(channelId);
-
-  if (textChannel instanceof TextChannel) {
-    // Construct the message with the Twitch stream link and a button
-    const messageContent = `Bot is streaming on Twitch: [Click Here to Watch](${twitchStreamLink})`;
-    textChannel.send(messageContent);
-  }
+    status: 'streaming', // Set status to "online" to see the purple streaming status
+  }).catch(console.error);
 
   currentIndex = (currentIndex + 1) % statusMessages.length;
 }
@@ -67,3 +45,4 @@ client.once('ready', () => {
 });
 
 login();
+
