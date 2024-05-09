@@ -9,7 +9,7 @@ const client = new Client({
   }),
 });
 const app = express();
-const port = 3000;
+const port = 4000;
 app.get('/', (req, res) => {
   res.send('YaY Your Bot Status Changed✨');
 });
@@ -18,10 +18,10 @@ app.listen(port, () => {
   console.log(`🔗 Powered By louza.talk4fun.net`);
 });
 
-const statusMessages = ["streaming","LOUZA COMMUNITY"];
+const statusMessages = ["streaming LOUZA COMMUNITY"];
 
 let currentIndex = 0;
-const channelId = '1238128020280311922'; // Your Discord channel ID goes here
+const channelId = ''; // Your Discord channel ID goes here
 
 const twitchStreamLink = 'https://www.twitch.tv/ahmed5102morocco'; // Replace with your Twitch stream link
 
