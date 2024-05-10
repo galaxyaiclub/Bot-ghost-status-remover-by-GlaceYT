@@ -1,4 +1,3 @@
-
 const { Client, GatewayIntentBits, ActivityType, TextChannel } = require('discord.js');
 require('dotenv').config();
 const express = require('express');
@@ -19,12 +18,12 @@ app.listen(port, () => {
   console.log(`🔗 Powered By RTX`);
 });
 
-
-const statusMessages = ["PLAYING","MUSIC"];
-
+const statusMessages = ["STREAMING", "LOUZA COMMUNITY®"];
 
 let currentIndex = 0;
-const channelId = '';
+const channelId = ''; // Your Discord channel ID goes here
+
+const twitchStreamLink = 'https://www.twitch.tv/ahmed5102morocco'; // Replace with your Twitch stream link
 
 async function login() {
   try {
@@ -36,25 +35,19 @@ async function login() {
   }
 }
 
-
-
 function updateStatusAndSendMessages() {
   const currentStatus = statusMessages[currentIndex];
   const nextStatus = statusMessages[(currentIndex + 1) % statusMessages.length];
 
   client.user.setPresence({
-    activities: [{ name: currentStatus, type: ActivityType.Custom}],
+    activities: [{ name: currentStatus, type: ActivityType.STREAMING, url: twitchStreamLink }],
     status: 'dnd',
   });
 
-  
   const textChannel = client.channels.cache.get(channelId);
 
   if (textChannel instanceof TextChannel) {
-   
     textChannel.send(`Bot status is: ${currentStatus}`);
-  } else {
-
   }
 
   currentIndex = (currentIndex + 1) % statusMessages.length;
