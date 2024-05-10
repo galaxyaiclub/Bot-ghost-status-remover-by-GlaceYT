@@ -1,4 +1,4 @@
-const { Client, GatewayIntentBits, ActivityType, TextChannel } = require('discord.js');
+const { Client, GatewayIntentBits, ActivityType } = require('discord.js');
 require('dotenv').config();
 const express = require('express');
 
@@ -46,12 +46,6 @@ function updateStatusAndSendMessages() {
     type: 'STREAMING',
     url: twitchStreamLink,
   });
-
-  const textChannel = client.channels.cache.get(channelId);
-
-  if (textChannel instanceof TextChannel) {
-    textChannel.send(`Bot status is: ${statusMessage}`);
-  }
 }
 
 client.once('ready', () => {
