@@ -1,29 +1,28 @@
 const { Client, GatewayIntentBits, ActivityType, TextChannel } = require('discord.js');
 require('dotenv').config();
 const express = require('express');
-const fs = require('fs');
-const path = require('path');
+
 const client = new Client({
   intents: Object.keys(GatewayIntentBits).map((a) => {
     return GatewayIntentBits[a];
   }),
 });
+
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
+
 app.get('/', (req, res) => {
   res.send('YaY Your Bot Status Changed✨');
 });
+
 app.listen(port, () => {
   console.log(`🔗 Listening to RTX: http://localhost:${port}`);
   console.log(`🔗 Powered By RTX`);
 });
 
-const statusMessages = ["STREAMING", "LOUZA COMMUNITY®"];
-
-let currentIndex = 0;
-const channelId = ''; // Your Discord channel ID goes here
-
+const statusMessage = "LIVE ON TWITCH";
 const twitchStreamLink = 'https://www.twitch.tv/ahmed5102morocco'; // Replace with your Twitch stream link
+const customStatus = "Watching Twitch"; // Custom status for the bot
 
 async function login() {
   try {
@@ -36,21 +35,23 @@ async function login() {
 }
 
 function updateStatusAndSendMessages() {
-  const currentStatus = statusMessages[currentIndex];
-  const nextStatus = statusMessages[(currentIndex + 1) % statusMessages.length];
-
+  // Set custom status
   client.user.setPresence({
-    activities: [{ name: currentStatus, type: ActivityType.STREAMING, url: twitchStreamLink }],
-    status: 'dnd',
+    activities: [{ name: customStatus, type: 'WATCHING' }],
+    status: 'online',
+  });
+
+  // Set rich presence activity
+  client.user.setActivity(statusMessage, {
+    type: 'STREAMING',
+    url: twitchStreamLink,
   });
 
   const textChannel = client.channels.cache.get(channelId);
 
   if (textChannel instanceof TextChannel) {
-    textChannel.send(`Bot status is: ${currentStatus}`);
+    textChannel.send(`Bot status is: ${statusMessage}`);
   }
-
-  currentIndex = (currentIndex + 1) % statusMessages.length;
 }
 
 client.once('ready', () => {
