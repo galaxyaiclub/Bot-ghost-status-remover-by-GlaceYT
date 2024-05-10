@@ -18,7 +18,7 @@ app.listen(port, () => {
   console.log(`🔗 Powered By RTX`);
 });
 
-const statusMessages = ["STREAMING LOUZA COMMUNITY®"];
+const statusMessages = ["LOUZA COMMUNITY®"];
 
 let currentIndex = 0;
 const channelId = '';
@@ -34,7 +34,7 @@ async function login() {
 }
 
 function updateStatusAndSendMessages() {
-  const currentStatus = `Streaming ${statusMessages[currentIndex]} - Watch me at https://twitch.tv/ahmed5102morocco`;
+  const currentStatus = `${statusMessages[currentIndex]}`;
   client.user.setPresence({
     activities: [{
       name: currentStatus,
