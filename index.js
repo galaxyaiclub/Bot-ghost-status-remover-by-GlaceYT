@@ -11,6 +11,7 @@ const statusMessages = ["streaming", "LOUZA COMMUNITY"];
 
 let currentIndex = 0;
 const twitchStreamLink = 'https://www.twitch.tv/ahmed5102morocco'; // Replace with your Twitch stream link
+const PORT = process.env.PORT || 3000; // Use the PORT environment variable provided by Render, or default to 3000
 
 async function login() {
   try {
@@ -27,7 +28,7 @@ function updateStatusAndSendMessages() {
 
   client.user.setPresence({
     activities: [{ name: currentStatus, type: 'STREAMING', url: twitchStreamLink }],
-    status: 'online', // Set status to "online" to see the purple streaming status
+    status: 'dnd', // Set status to "online" to see the purple streaming status
   });
 
   currentIndex = (currentIndex + 1) % statusMessages.length;
